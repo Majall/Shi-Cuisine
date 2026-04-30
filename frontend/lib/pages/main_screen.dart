@@ -31,42 +31,52 @@ class _MainScreen extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.grey.shade900,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: GNav(
-            gap: 10,
-            backgroundColor: Colors.grey.shade900,
-            color: Colors.yellow,
-            activeColor: Colors.black,
-            tabBackgroundColor: Colors.yellow.shade100,
-            padding: const EdgeInsets.all(16),
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              GButton(
-                icon: CupertinoIcons.square_grid_2x2_fill,
-                text: 'Ingredients',
-              ),
-              GButton(
-                icon: Icons.restaurant_menu,
-                text: 'Recipes',
-              ),
-              GButton(
-                icon: Icons.person,
-                text: 'Profile',
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) => setState(() => _selectedIndex = index),
-          ),
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(26),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.12),
+              blurRadius: 16,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: GNav(
+          gap: 10,
+          backgroundColor: Colors.transparent,
+          color: colorScheme.onSurfaceVariant,
+          activeColor: colorScheme.primary,
+          tabBackgroundColor: colorScheme.primary.withOpacity(0.12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: CupertinoIcons.square_grid_2x2_fill,
+              text: 'Ingredients',
+            ),
+            GButton(
+              icon: Icons.restaurant_menu,
+              text: 'Recipes',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Profile',
+            ),
+          ],
+          selectedIndex: _selectedIndex,
+          onTabChange: (index) => setState(() => _selectedIndex = index),
         ),
       ),
     );

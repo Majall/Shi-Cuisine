@@ -38,67 +38,83 @@ class PopRecipesList extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  width: 200,
-                  child: Stack(
+                  margin: const EdgeInsets.only(right: 14),
+                  width: 210,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(popularrecipes[index].image),
-                                fit: BoxFit.fill,
-                              ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(18),
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              popularrecipes[index].image,
+                              height: 140,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            popularrecipes[index].name,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Icon(
-                                Iconsax.flash_1,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              Text(
-                                "${popularrecipes[index].cal} Cal",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xCC000000),
+                                      Color(0x00000000),
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                  ),
+                                ),
+                                child: Text(
+                                  popularrecipes[index].name,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              const Text(
-                                " · ",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              const Icon(
-                                Iconsax.clock,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              Text(
-                                "${popularrecipes[index].time} Min",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Icon(
+                            Iconsax.flash_1,
+                            size: 18,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "${popularrecipes[index].cal} Cal",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const Text(
+                            " · ",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          const Icon(
+                            Iconsax.clock,
+                            size: 18,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "${popularrecipes[index].time} Min",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

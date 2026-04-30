@@ -9,25 +9,59 @@ class HomeAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: const Image(
-            image: AssetImage("assets/images/appLogoWhite.jpg"),
-            width: 100,
-            height: 100,
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.12),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: const Image(
+              image: AssetImage("assets/images/appLogoWhite.jpg"),
+              width: 70,
+              height: 70,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        const Text(
-          "Welcome to\n  SriCuisine!",
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            height: 1,
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Welcome back",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: colorScheme.onSurfaceVariant,
+                  letterSpacing: 1,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "SriCuisine",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                  height: 1,
+                ),
+              ),
+            ],
           ),
         ),
-        // const Spacer(),
         IconButton(
           onPressed: () {
             IngridientApi.getIngredient(context);
@@ -36,42 +70,15 @@ class HomeAppbar extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: colorScheme.primary.withOpacity(0.12),
             fixedSize: const Size(55, 55),
           ),
-          icon: const Icon(Iconsax.notification),
+          icon: Icon(
+            Iconsax.notification,
+            color: colorScheme.primary,
+          ),
         ),
       ],
     );
   }
-}
-
-// class AvailableIngredientsScreen extends StatefulWidget {
-//   @override
-//   _AvailableIngredientsScreenState createState() =>
-//       _AvailableIngredientsScreenState();
-// }
-
-// class _AvailableIngredientsScreenState
-//     extends State<AvailableIngredientsScreen> {
-//   // Your existing code for ingredient selection and recipe generation
-
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.yellow,
-      title: const Text(
-        'Available Ingredients',
-        style: TextStyle(color: Colors.black),
-      ),
-      centerTitle: true,
-    ),
-    body: const Column(
-      children: [
-        HomeAppbar(), // Adding HomeAppbar here
-        // Your existing code for ingredient selection
-      ],
-    ),
-  );
 }
