@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+git commit -a -m "gitignore updated"
+
+# Log files
+*.log
+
+# IDE or editor files
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# npm debugging logs
+npm-debug.log*
+
+# yarn logs
+yarn-debug.log*
+yarn-error.log*
+
+.env
