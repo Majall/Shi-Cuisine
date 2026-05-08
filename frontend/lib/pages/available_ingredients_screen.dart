@@ -293,7 +293,7 @@ class _AvailableIngredientsScreenState
                       // Placeholder for scanner
                     },
                     icon: const Icon(Icons.qr_code),
-                    label: const Text('Scan the ingredients'),
+                    label: const Text('Scan ingredients'),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -304,12 +304,12 @@ class _AvailableIngredientsScreenState
                       // Placeholder for recipe generation
                       if (_selectedIngredients.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
+                          SnackBar(
+                            content: const Text(
                               'Please select ingredients to generate recipes',
                               textAlign: TextAlign.center,
                             ),
-                            backgroundColor: Colors.red,
+                            backgroundColor: colorScheme.error,
                           ),
                         );
                       } else {
