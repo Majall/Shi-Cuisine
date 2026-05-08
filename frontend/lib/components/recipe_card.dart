@@ -20,7 +20,7 @@ class RecipeCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       clipBehavior: Clip.antiAlias,
-      elevation: 8,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(22),
       ),

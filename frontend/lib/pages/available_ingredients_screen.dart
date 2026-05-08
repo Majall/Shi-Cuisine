@@ -202,82 +202,86 @@ class _AvailableIngredientsScreenState
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: isSelected && _showIngredients,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        height: _showIngredients
-                            ? MediaQuery.of(context).size.height * 0.3
-                            : 0,
-                        child: Center(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: _ingredients[index]
-                                  .map(
-                                    (ingredient) => Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          _onIngredientSelected(ingredient);
-                                        },
-                                        child: CheckboxListTile(
-                                          title: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: _selectedIngredients
-                                                            .any((element) =>
-                                                                element[
-                                                                    'name'] ==
-                                                                ingredient)
-                                                        ? colorScheme.primary
-                                                        : colorScheme.onSurface,
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                      height: isSelected && _showIngredients
+                          ? MediaQuery.of(context).size.height * 0.3
+                          : 0,
+                      child: isSelected && _showIngredients
+                          ? Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: _ingredients[index]
+                                      .map(
+                                        (ingredient) => Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _onIngredientSelected(ingredient);
+                                            },
+                                            child: CheckboxListTile(
+                                              title: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: _selectedIngredients
+                                                                .any((element) =>
+                                                                    element[
+                                                                        'name'] ==
+                                                                    ingredient)
+                                                            ? colorScheme.primary
+                                                            : colorScheme
+                                                                .onSurface,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      _onIngredientSelected(
+                                                          ingredient);
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.calendar_today,
+                                                      color: _selectedIngredients
+                                                              .any((element) =>
+                                                                  element[
+                                                                      'name'] ==
+                                                                  ingredient)
+                                                          ? colorScheme.primary
+                                                          : colorScheme
+                                                              .onSurfaceVariant,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  _onIngredientSelected(
-                                                      ingredient);
-                                                },
-                                                icon: Icon(
-                                                  Icons.calendar_today,
-                                                  color: _selectedIngredients
-                                                          .any((element) =>
-                                                              element['name'] ==
-                                                              ingredient)
-                                                      ? colorScheme.primary
-                                                      : colorScheme
-                                                          .onSurfaceVariant,
-                                                ),
-                                              ),
-                                            ],
+                                              value: _selectedIngredients.any(
+                                                  (element) =>
+                                                      element['name'] ==
+                                                      ingredient),
+                                              onChanged: (value) {
+                                                _onIngredientSelected(
+                                                    ingredient);
+                                              },
+                                              controlAffinity:
+                                                  ListTileControlAffinity
+                                                      .leading,
+                                              activeColor: colorScheme.primary,
+                                            ),
                                           ),
-                                          value: _selectedIngredients.any(
-                                              (element) =>
-                                                  element['name'] ==
-                                                  ingredient),
-                                          onChanged: (value) {
-                                            _onIngredientSelected(ingredient);
-                                          },
-                                          controlAffinity:
-                                              ListTileControlAffinity.leading,
-                                          activeColor: colorScheme.primary,
                                         ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        ),
-                      ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                   ],
                 );
