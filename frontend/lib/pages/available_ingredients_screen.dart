@@ -147,7 +147,6 @@ class _AvailableIngredientsScreenState
               itemBuilder: (context, index) {
                 final category = _categories[index];
                 final isSelected = _selectedIndex == index;
-                final showIngredients = isSelected && _showIngredients;
                 return Column(
                   children: [
                     GestureDetector(
@@ -208,7 +207,7 @@ class _AvailableIngredientsScreenState
                         duration: const Duration(milliseconds: 200),
                         curve: Curves.easeInOut,
                         alignment: Alignment.topCenter,
-                        heightFactor: showIngredients ? 1 : 0,
+                        heightFactor: isSelected && _showIngredients ? 1 : 0,
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.3,
                           child: Center(
