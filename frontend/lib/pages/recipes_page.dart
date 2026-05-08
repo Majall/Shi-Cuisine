@@ -75,7 +75,7 @@ class _Recipes extends State<RecipesPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                AvailableIngredientsScreen(),
+                                const AvailableIngredientsScreen(),
                           ),
                         );
                       },

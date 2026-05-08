@@ -3,6 +3,8 @@ import 'package:sri_cuisine/services/IngredientApi.dart';
 import 'package:sri_cuisine/services/UserApi.dart';
 
 class AvailableIngredientsScreen extends StatefulWidget {
+  const AvailableIngredientsScreen({super.key});
+
   @override
   _AvailableIngredientsScreenState createState() =>
       _AvailableIngredientsScreenState();
@@ -203,7 +205,7 @@ class _AvailableIngredientsScreenState
                     Visibility(
                       visible: isSelected && _showIngredients,
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 220),
+                        duration: const Duration(milliseconds: 200),
                         curve: Curves.easeInOut,
                         height: _showIngredients
                             ? MediaQuery.of(context).size.height * 0.3
