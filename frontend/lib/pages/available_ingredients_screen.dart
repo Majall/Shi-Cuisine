@@ -228,7 +228,7 @@ class _AvailableIngredientsScreenState
                                                     child: Text(
                                                       '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: _selectedIngredients

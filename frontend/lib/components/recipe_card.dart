@@ -43,11 +43,11 @@ class RecipeCard extends StatelessWidget {
               ),
             ),
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0x001B1B1B),
-                    Color(0xCC1B1B1B),
+                    colorScheme.shadow.withOpacity(0),
+                    colorScheme.shadow.withOpacity(0.7),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
