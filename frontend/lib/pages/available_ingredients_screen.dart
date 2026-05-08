@@ -147,6 +147,7 @@ class _AvailableIngredientsScreenState
               itemBuilder: (context, index) {
                 final category = _categories[index];
                 final isSelected = _selectedIndex == index;
+                final showIngredients = isSelected && _showIngredients;
                 return Column(
                   children: [
                     GestureDetector(
@@ -202,53 +203,36 @@ class _AvailableIngredientsScreenState
                         ),
                       ),
                     ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                      height: isSelected && _showIngredients
-                          ? MediaQuery.of(context).size.height * 0.3
-                          : 0,
-                      child: isSelected && _showIngredients
-                          ? Center(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: _ingredients[index]
-                                      .map(
-                                        (ingredient) => Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              _onIngredientSelected(ingredient);
-                                            },
-                                            child: CheckboxListTile(
-                                              title: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: _selectedIngredients
-                                                                .any((element) =>
-                                                                    element[
-                                                                        'name'] ==
-                                                                    ingredient)
-                                                            ? colorScheme.primary
-                                                            : colorScheme
-                                                                .onSurface,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      _onIngredientSelected(
-                                                          ingredient);
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.calendar_today,
+                    ClipRect(
+                      child: AnimatedAlign(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        alignment: Alignment.topCenter,
+                        heightFactor: showIngredients ? 1 : 0,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: _ingredients[index]
+                                    .map(
+                                      (ingredient) => Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            _onIngredientSelected(ingredient);
+                                          },
+                                          child: CheckboxListTile(
+                                            title: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: _selectedIngredients
                                                               .any((element) =>
                                                                   element[
@@ -256,32 +240,48 @@ class _AvailableIngredientsScreenState
                                                                   ingredient)
                                                           ? colorScheme.primary
                                                           : colorScheme
-                                                              .onSurfaceVariant,
+                                                              .onSurface,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                              value: _selectedIngredients.any(
-                                                  (element) =>
-                                                      element['name'] ==
-                                                      ingredient),
-                                              onChanged: (value) {
-                                                _onIngredientSelected(
-                                                    ingredient);
-                                              },
-                                              controlAffinity:
-                                                  ListTileControlAffinity
-                                                      .leading,
-                                              activeColor: colorScheme.primary,
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    _onIngredientSelected(
+                                                        ingredient);
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.calendar_today,
+                                                    color: _selectedIngredients
+                                                            .any((element) =>
+                                                                element['name'] ==
+                                                                ingredient)
+                                                        ? colorScheme.primary
+                                                        : colorScheme
+                                                            .onSurfaceVariant,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
+                                            value: _selectedIngredients.any(
+                                                (element) =>
+                                                    element['name'] ==
+                                                    ingredient),
+                                            onChanged: (value) {
+                                              _onIngredientSelected(ingredient);
+                                            },
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
+                                            activeColor: colorScheme.primary,
                                           ),
                                         ),
-                                      )
-                                      .toList(),
-                                ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
-                            )
-                          : const SizedBox.shrink(),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 );
