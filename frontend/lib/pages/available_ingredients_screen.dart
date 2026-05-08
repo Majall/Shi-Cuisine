@@ -132,14 +132,10 @@ class _AvailableIngredientsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow,
-        title: const Text(
-          'Available Ingredients',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
+        title: const Text('Available Ingredients'),
       ),
       body: Column(
         children: [
@@ -156,44 +152,36 @@ class _AvailableIngredientsScreenState
                         _onCategoryTapped(index);
                       },
                       child: Card(
-                        elevation: isSelected ? 4 : 2,
+                        elevation: isSelected ? 3 : 1,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
+                              horizontal: 16, vertical: 14),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? const Color(0xFFE0E0E0)
-                                : const Color(0xFFE0E0E0),
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: isSelected
-                                ? [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: const Offset(0, 1),
-                                    ),
-                                  ]
-                                : [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: const Offset(0, 1),
-                                    ),
-                                  ],
+                                ? colorScheme.primary.withOpacity(0.08)
+                                : colorScheme.surface,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isSelected
+                                  ? colorScheme.primary
+                                  : colorScheme.outlineVariant,
+                            ),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 category,
                                 style: TextStyle(
-                                  color:
-                                      isSelected ? Colors.blue : Colors.black,
-                                  fontSize: 18,
+                                  color: isSelected
+                                      ? colorScheme.primary
+                                      : colorScheme.onSurface,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -203,7 +191,9 @@ class _AvailableIngredientsScreenState
                                         ? Icons.arrow_drop_up
                                         : Icons.arrow_drop_down
                                     : null,
-                                color: isSelected ? Colors.blue : Colors.black,
+                                color: isSelected
+                                    ? colorScheme.primary
+                                    : colorScheme.onSurfaceVariant,
                               ),
                             ],
                           ),
@@ -213,7 +203,7 @@ class _AvailableIngredientsScreenState
                     Visibility(
                       visible: isSelected && _showIngredients,
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 0),
+                        duration: const Duration(milliseconds: 220),
                         curve: Curves.easeInOut,
                         height: _showIngredients
                             ? MediaQuery.of(context).size.height * 0.3
@@ -237,15 +227,15 @@ class _AvailableIngredientsScreenState
                                                 child: Text(
                                                   '$ingredient ${_selectedIngredients.where((item) => item['name'] == ingredient).isNotEmpty ? '- ${_selectedIngredients.firstWhere((item) => item['name'] == ingredient)['date'].toString().substring(0, 10)}' : ''}',
                                                   style: TextStyle(
-                                                    fontSize: 15,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                     color: _selectedIngredients
                                                             .any((element) =>
                                                                 element[
                                                                     'name'] ==
                                                                 ingredient)
-                                                        ? Colors.blue
-                                                        : Colors.black,
+                                                        ? colorScheme.primary
+                                                        : colorScheme.onSurface,
                                                   ),
                                                 ),
                                               ),
@@ -260,8 +250,9 @@ class _AvailableIngredientsScreenState
                                                           .any((element) =>
                                                               element['name'] ==
                                                               ingredient)
-                                                      ? Colors.blue
-                                                      : Colors.black,
+                                                      ? colorScheme.primary
+                                                      : colorScheme
+                                                          .onSurfaceVariant,
                                                 ),
                                               ),
                                             ],
@@ -275,7 +266,7 @@ class _AvailableIngredientsScreenState
                                           },
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
-                                          activeColor: Colors.blue,
+                                          activeColor: colorScheme.primary,
                                         ),
                                       ),
                                     ),
@@ -292,83 +283,58 @@ class _AvailableIngredientsScreenState
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.tonalIcon(
+                    onPressed: () {
+                      // Placeholder for scanner
+                    },
+                    icon: const Icon(Icons.qr_code),
+                    label: const Text('Scan the ingredients'),
                   ),
                 ),
-                onPressed: () {
-                  // Placeholder for scanner
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.qr_code, color: Colors.black), // Scanner Icon
-                    SizedBox(width: 10), // Spacer
-                    Text(
-                      'Scan the Ingredients',
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () {
+                      // Placeholder for recipe generation
+                      if (_selectedIngredients.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Please select ingredients to generate recipes',
+                              textAlign: TextAlign.center,
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else {
+                        for (final ingredient in _selectedIngredients) {
+                          ingredientData.add({
+                            'user': UserApi.user.id,
+                            'name': ingredient['name'],
+                            'expiryDate':
+                                ingredient['date'].toString().substring(0, 10),
+                          });
+                          print(ingredient);
+                        }
+                        print(ingredientData);
+                        IngridientApi.createBatchIngredient(
+                            context, ingredientData);
+                        ingredientData.clear();
+                        _selectedIngredients.clear();
+                        setState(() {});
+                      }
+                    },
+                    icon: const Icon(Icons.save),
+                    label: const Text('Save ingredients'),
                   ),
                 ),
-                onPressed: () {
-                  // Placeholder for recipe generation
-                  if (_selectedIngredients.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please select ingredients to generate recipes',
-                          textAlign: TextAlign.center,
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  } else {
-                    for (final ingredient in _selectedIngredients) {
-                      ingredientData.add({
-                        'user': UserApi.user.id,
-                        'name': ingredient['name'],
-                        'expiryDate':
-                            ingredient['date'].toString().substring(0, 10),
-                      });
-                      print(ingredient);
-                    }
-                    print(ingredientData);
-                    IngridientApi.createBatchIngredient(
-                        context, ingredientData);
-                    ingredientData.clear();
-                    _selectedIngredients.clear();
-                    setState(() {});
-                  }
-                },
-                child: const Text(
-                  'Save Ingredients',
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ),
+              ],
             ),
           ),
         ],

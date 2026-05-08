@@ -6,7 +6,8 @@ class RecipeCard extends StatelessWidget {
   final String calorie;
   final String cookTime;
   final String thumbnailUrl;
-  const RecipeCard({super.key, 
+  const RecipeCard({
+    super.key,
     required this.title,
     required this.cookTime,
     required this.calorie,
@@ -15,98 +16,118 @@ class RecipeCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-      width: MediaQuery.of(context).size.width,
-      height: 180,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 200, 167, 167),
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.6),
-            offset: const Offset(
-              0.0,
-              10.0,
-            ),
-            blurRadius: 10.0,
-            spreadRadius: -6.0,
-          ),
-        ],
-        image: DecorationImage(
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.35),
-            BlendMode.multiply,
-          ),
-          image: NetworkImage(thumbnailUrl),
-          fit: BoxFit.cover,
-        ),
+    final colorScheme = Theme.of(context).colorScheme;
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      clipBehavior: Clip.antiAlias,
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(22),
       ),
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
+      child: SizedBox(
+        height: 190,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.network(
+              thumbnailUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: colorScheme.surfaceVariant,
+                child: Icon(
+                  Icons.broken_image_outlined,
+                  color: colorScheme.onSurfaceVariant,
+                  size: 42,
                 ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                textAlign: TextAlign.center,
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.local_fire_department,
-                          color: Colors.yellow, size: 18),
-                      const SizedBox(width: 7),
-                      Text("$calorie cal",
-                          style: const TextStyle(
-                            color: Colors.white,
-                          )),
-                    ],
-                  ),
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0x001B1B1B),
+                    Color(0xCC1B1B1B),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  child: Row(
+                  const SizedBox(height: 10),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 8,
                     children: [
-                      const Icon(
-                        Icons.schedule,
-                        color: Colors.yellow,
-                        size: 18,
+                      _InfoChip(
+                        icon: Icons.local_fire_department,
+                        label: "$calorie cal",
                       ),
-                      const SizedBox(width: 7),
-                      Text("$cookTime min",
-                          style: const TextStyle(
-                            color: Colors.white,
-                          )),
+                      _InfoChip(
+                        icon: Icons.schedule,
+                        label: "$cookTime min",
+                      ),
                     ],
                   ),
-                )
-              ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  const _InfoChip({
+    required this.icon,
+    required this.label,
+  });
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.45),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 16,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
